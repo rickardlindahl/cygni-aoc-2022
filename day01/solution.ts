@@ -38,38 +38,24 @@ const part1 = (caloriesPerElf: number[]): number => {
 };
 
 const part2 = (caloriesPerElf: number[]): number => {
-  const top3Calories = caloriesPerElf.reduce(
-    (previous, currentElf) => {
-      if (currentElf > previous.elf1) {
-        return {
-          elf1: currentElf,
-          elf2: previous.elf1,
-          elf3: previous.elf2,
-        };
-      }
+  let elf1 = Number.NEGATIVE_INFINITY;
+  let elf2 = Number.NEGATIVE_INFINITY;
+  let elf3 = Number.NEGATIVE_INFINITY;
 
-      if (currentElf > previous.elf2) {
-        return { elf1: previous.elf1, elf2: currentElf, elf3: previous.elf2 };
-      }
-
-      if (currentElf > previous.elf3) {
-        return {
-          elf1: previous.elf1,
-          elf2: previous.elf2,
-          elf3: currentElf,
-        };
-      }
-
-      return previous;
-    },
-    {
-      elf1: Number.NEGATIVE_INFINITY,
-      elf2: Number.NEGATIVE_INFINITY,
-      elf3: Number.NEGATIVE_INFINITY,
+  for (const currentElf of caloriesPerElf) {
+    if (currentElf > elf1) {
+      elf3 = elf2;
+      elf2 = elf1;
+      elf1 = currentElf;
+    } else if (currentElf > elf2) {
+      elf3 = elf2;
+      elf2 = currentElf;
+    } else if (currentElf > elf3) {
+      elf3 = currentElf;
     }
-  );
+  }
 
-  return top3Calories.elf1 + top3Calories.elf2 + top3Calories.elf3;
+  return elf1 + elf2 + elf3;
 };
 
 const main = async (filename: string, part: "part1" | "part2") => {
