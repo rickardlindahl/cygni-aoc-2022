@@ -27,11 +27,15 @@ const readFile = async (filename: string) => {
   return caloriesPerElf;
 };
 
-const part1 = (caloriesPerElf: number[]): number =>
-  caloriesPerElf.reduce(
-    (highest, current) => (current > highest ? current : highest),
-    0
-  );
+const part1 = (caloriesPerElf: number[]): number => {
+  let highest = 0;
+  for (const currentElfCalories of caloriesPerElf) {
+    if (currentElfCalories > highest) {
+      highest = currentElfCalories;
+    }
+  }
+  return highest;
+};
 
 const part2 = (caloriesPerElf: number[]): number => {
   const top3Calories = caloriesPerElf.reduce(
